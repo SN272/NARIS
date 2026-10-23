@@ -1,4 +1,4 @@
-# Virtual machines and snapshots
+# VirtualBox and virtual machine assets
 *.vdi
 *.vmdk
 *.vhd
@@ -7,18 +7,18 @@
 *.ovf
 *.vbox
 *.vbox-prev
+*.sav
 Snapshots/
 Logs/
-*.sav
 
-# Operating system installers and archives
+# Installer and archive files
 *.iso
 *.7z
 *.msi
 *.exe
 *.zip
 
-# Raw and potentially sensitive evidence
+# Raw forensic evidence (keep outside Git unless explicitly sanitized/reviewed)
 *.pcap
 *.pcapng
 *.mem
@@ -26,18 +26,19 @@ Logs/
 *.dd
 *.E01
 
-# Python artifacts and virtual environments
+# Python
 __pycache__/
 *.py[cod]
 .venv/
 venv/
 
-# Secrets and local configuration
+# Secrets and local environment
 .env
 .env.*
 !.env.example
 
-# Editor and operating-system files
+# Editor and operating system files
 .vscode/
+.idea/
 .DS_Store
 Thumbs.db
