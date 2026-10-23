@@ -18,7 +18,7 @@ The experiment will establish ground truth in a controlled virtual lab, collect 
 
 ## Lab baseline
 
-The lab uses Kali Linux and Windows guests connected through a VirtualBox Internal Network named `naris-intnet`. The currently recorded addresses are Kali `192.168.56.10/24` and Windows `192.168.56.20/24`. Exact configuration and verification notes are maintained in [`docs/environment.md`](docs/environment.md).
+The lab uses Kali Linux and Windows guests connected through a VirtualBox Internal Network named `naris-intnet`. The recorded addresses are Kali `192.168.56.10/24` and Windows `192.168.56.20/24`. See [`docs/environment.md`](docs/environment.md) for the verified configuration, tool versions, snapshots, and outstanding limitations.
 
 ## Repository structure
 
@@ -43,17 +43,16 @@ As the project develops, scripts, experiment configuration, sanitized example da
 
 ## Current status
 
-- [x] Kali and Windows VMs created.
-- [x] Baseline snapshots and descriptions recorded from VirtualBox.
-- [x] Static lab addresses configured.
-- [x] Kali-to-Windows ping previously verified.
-- [x] Initial documentation committed and pushed.
+- [x] Kali and Windows VMs created and baseline snapshots recorded.
+- [x] Static lab addresses configured and guest-to-guest connectivity previously verified.
+- [x] Host hardware, VM resource allocations, guest IPs, adapter configuration, and snapshot inventory recorded.
+- [x] Windows guest identity confirmed through Windows Settings as Windows 11 Home Single Language, version 26H2, build 26300.9457. The registry `ProductName` value reports Windows 10; this conflicting value is retained in the environment notes.
 - [x] Kali OS, kernel, packet-analysis tool, Python, and SHA-256 utility versions recorded.
-- [x] Host hardware, VM resource allocations, guest IPs, adapters, and snapshot inventory recorded.
-- [ ] Resolve Windows guest identity discrepancy before formal experiments.
-- [ ] Review firewall scope and validate the isolation model before formal experiments.
-- [ ] Implement the ground-truth engine.
-- [ ] Implement repeatable evidence collection and reconstruction experiments.
+- [x] Host Git and Wireshark versions verified.
+- [x] Windows Firewall state and ICMP rule scope recorded; the current rule is intentionally unchanged for now.
+- [ ] Install and verify Autopsy and FTK Imager before using them in the workflow; Sysinternals Suite is downloaded but not yet configured/verified.
+- [ ] Begin ground-truth event generation after remaining C1 readiness decisions are complete.
+- [ ] Implement repeatable evidence collection, degradation, and reconstruction experiments.
 
 ## Safety and research integrity
 
