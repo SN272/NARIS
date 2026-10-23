@@ -1,0 +1,43 @@
+# Virtual machines and snapshots
+*.vdi
+*.vmdk
+*.vhd
+*.vhdx
+*.ova
+*.ovf
+*.vbox
+*.vbox-prev
+Snapshots/
+Logs/
+*.sav
+
+# Operating system installers and archives
+*.iso
+*.7z
+*.msi
+*.exe
+*.zip
+
+# Raw and potentially sensitive evidence
+*.pcap
+*.pcapng
+*.mem
+*.raw
+*.dd
+*.E01
+
+# Python artifacts and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Editor and operating-system files
+.vscode/
+.DS_Store
+Thumbs.db
