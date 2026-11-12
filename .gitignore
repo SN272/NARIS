@@ -42,3 +42,10 @@ venv/
 .idea/
 .DS_Store
 Thumbs.db
+
+# NARIS local experimental data
+experiment_data/*
+!experiment_data/README.md
+pilot_data/
+integrity_registry.json
+config/targets.json

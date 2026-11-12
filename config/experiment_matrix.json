@@ -1,0 +1,70 @@
+
+{
+    "project": "NARIS",
+    "dataset_role": "research_trial",
+    "design_version": "1.0",
+    "total_scenarios": 3,
+    "degradation_levels": [
+        {
+            "id": "L0",
+            "name": "Baseline",
+            "description": "No anti-forensic degradation"
+        },
+        {
+            "id": "L1",
+            "name": "Low",
+            "description": "Low evidence degradation"
+        },
+        {
+            "id": "L2",
+            "name": "Moderate",
+            "description": "Moderate evidence degradation"
+        },
+        {
+            "id": "L3",
+            "name": "High",
+            "description": "High evidence degradation"
+        },
+        {
+            "id": "L4",
+            "name": "Severe",
+            "description": "Severe evidence degradation"
+        }
+    ],
+    "scenarios": [
+        {
+            "id": "S1",
+            "name": "Unauthorized File Access and Exfiltration",
+            "description": "Controlled file access and simulated data transfer activity"
+        },
+        {
+            "id": "S2",
+            "name": "Suspicious Process Execution and Persistence",
+            "description": "Controlled process execution and persistence-related activity"
+        },
+        {
+            "id": "S3",
+            "name": "Unauthorized Remote Access and Command Execution",
+            "description": "Controlled remote access and command execution activity"
+        }
+    ],
+    "trials_per_combination": 10,
+    "reconstruction_modes": [
+        "host_only",
+        "network_only",
+        "combined"
+    ],
+    "expected_trials": 150,
+    "expected_reconstruction_runs": 450,
+    "ground_truth_policy": {
+        "separate_storage": true,
+        "accessible_to_reconstruction": false,
+        "evaluation_only": true
+    },
+    "execution": {
+        "random_seed": 2027,
+        "continue_on_trial_failure": true,
+        "record_failed_trials": true,
+        "overwrite_existing_trials": false
+    }
+}

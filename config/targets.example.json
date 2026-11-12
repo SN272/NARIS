@@ -1,0 +1,23 @@
+
+{
+    "experiment": {
+        "scenario": "system_baseline_collection",
+        "collection_type": "real_system_inventory"
+    },
+    "controller": {
+        "host": "CONTROLLER_IP",
+        "port": 8765
+    },
+    "targets": {
+        "windows": {
+            "name": "NARIS-Windows",
+            "address": "WINDOWS_VM_IP",
+            "enabled": true
+        },
+        "kali": {
+            "name": "NARIS-Kali",
+            "address": "KALI_VM_IP",
+            "enabled": true
+        }
+    }
+}
