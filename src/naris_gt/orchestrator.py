@@ -8,7 +8,14 @@ from src.naris_gt.experiment_matrix import load_experiment_matrix
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DATASET_ROOT = PROJECT_ROOT / "experiment_data" / "final_dataset"
+
+DATASET_ROOT = (
+    PROJECT_ROOT
+    / "experiment_data"
+    / "naris_v1"
+    / "final_dataset"
+)
+
 BATCH_MANIFEST = DATASET_ROOT / "batch_manifest.json"
 
 
@@ -27,6 +34,45 @@ def write_json(path, data):
         file.write("\n")
 
     temporary_path.replace(path)
+
+
+def validate_v1_matrix(matrix):
+    if matrix.get("design_version") != "1.0":
+        raise ValueError("Only NARIS v1.0 is supported.")
+
+    scenarios = matrix["scenarios"]
+    levels = matrix["degradation_levels"]
+    modes = matrix["reconstruction_modes"]
+
+    if len(scenarios) != 1 or scenarios[0].get("id") != "S1":
+        raise ValueError("v1.0 must contain exactly scenario S1.")
+
+    expected_levels = ["L0", "L1", "L2", "L3", "L4"]
+    actual_levels = [level.get("id") for level in levels]
+
+    if actual_levels != expected_levels:
+        raise ValueError(
+            f"Expected degradation levels {expected_levels}, "
+            f"received {actual_levels}."
+        )
+
+    if matrix["trials_per_combination"] != 10:
+        raise ValueError("v1.0 requires exactly 10 repetitions per level.")
+
+    expected_modes = ["host_only", "network_only", "combined"]
+
+    if modes != expected_modes:
+        raise ValueError(
+            f"Expected reconstruction modes {expected_modes}."
+        )
+
+    if matrix["expected_trials"] != 50:
+        raise ValueError("v1.0 must contain exactly 50 trials.")
+
+    if matrix["expected_reconstruction_runs"] != 150:
+        raise ValueError("v1.0 must contain exactly 150 reconstruction runs.")
+
+    return True
 
 
 def build_trial_plan(matrix):
@@ -65,7 +111,8 @@ def create_trial_workspace(trial, matrix):
 
     directories = [
         "ground_truth",
-        "evidence/host",
+        "evidence/host/original",
+        "evidence/host/degraded",
         "evidence/network",
         "reconstruction/host_only",
         "reconstruction/network_only",
@@ -80,6 +127,7 @@ def create_trial_workspace(trial, matrix):
         "experiment_id": trial_id,
         "project": "NARIS",
         "dataset_role": "research_trial",
+        "design_version": matrix["design_version"],
         "status": "planned",
         "created_at": utc_now(),
         "scenario_id": trial["scenario_id"],
@@ -94,11 +142,13 @@ def create_trial_workspace(trial, matrix):
         "design_version": matrix["design_version"],
         "scenario_id": trial["scenario_id"],
         "degradation_level_id": trial["degradation_level_id"],
+        "degradation_level_name": trial["degradation_level_name"],
         "repetition": trial["repetition"],
         "reconstruction_modes": matrix["reconstruction_modes"],
         "random_seed": matrix["execution"]["random_seed"],
         "ground_truth_location": "ground_truth",
-        "ground_truth_access": "evaluation_only"
+        "ground_truth_access": "evaluation_only",
+        "evidence_policy": matrix["evidence_policy"]
     }
 
     write_json(trial_dir / "metadata.json", metadata)
@@ -109,45 +159,46 @@ def create_trial_workspace(trial, matrix):
 
 def initialise_batch():
     matrix = load_experiment_matrix()
+    validate_v1_matrix(matrix)
 
-    DATASET_ROOT.mkdir(parents=True, exist_ok=True)
-
-    if BATCH_MANIFEST.exists():
+    if DATASET_ROOT.exists():
         raise FileExistsError(
-            "A batch manifest already exists. "
-            "The orchestrator will not overwrite an existing batch."
+            f"v1.0 dataset directory already exists: {DATASET_ROOT}. "
+            "The orchestrator will not overwrite existing data."
         )
 
-    existing_trials = [
-        path for path in DATASET_ROOT.iterdir()
-        if path.is_dir()
-    ]
-
-    if existing_trials:
-        raise FileExistsError(
-            "The final dataset directory already contains trial folders. "
-            "Use a new empty dataset directory or review the existing batch."
-        )
+    DATASET_ROOT.mkdir(parents=True, exist_ok=False)
 
     plan = build_trial_plan(matrix)
+
+    if len(plan) != 50:
+        raise RuntimeError(
+            f"Expected 50 trials, generated {len(plan)}."
+        )
 
     batch = {
         "batch_id": str(uuid.uuid4()),
         "project": "NARIS",
         "dataset_role": "research_trial",
-        "design_version": matrix["design_version"],
+        "design_version": "1.0",
+        "version": "NARIS-v1.0",
+        "scenario_scope": ["S1"],
         "created_at": utc_now(),
         "status": "initialising",
         "planned_trials": len(plan),
         "created_trials": 0,
         "failed_trials": 0,
+        "expected_reconstruction_runs": 150,
+        "reconstruction_modes": matrix["reconstruction_modes"],
         "trials": []
     }
+
+    # Persist the initial manifest before creating workspaces.
+    write_json(BATCH_MANIFEST, batch)
 
     for trial in plan:
         try:
             create_trial_workspace(trial, matrix)
-
             trial["status"] = "planned"
             batch["created_trials"] += 1
 
@@ -158,7 +209,7 @@ def initialise_batch():
 
         batch["trials"].append(trial)
 
-        # Persist progress after each trial so failures are not lost.
+        # Persist progress after every trial.
         batch["status"] = "initialising"
         write_json(BATCH_MANIFEST, batch)
 
@@ -176,12 +227,18 @@ def initialise_batch():
 if __name__ == "__main__":
     result = initialise_batch()
 
-    print("\nNARIS BATCH INITIALISATION")
-    print("-" * 42)
+    print("\nNARIS v1.0 BATCH INITIALISATION")
+    print("-" * 45)
     print(f"Batch ID: {result['batch_id']}")
+    print(f"Design version: {result['design_version']}")
+    print(f"Scenario scope: {result['scenario_scope']}")
     print(f"Planned trials: {result['planned_trials']}")
     print(f"Created workspaces: {result['created_trials']}")
     print(f"Failed initialisations: {result['failed_trials']}")
+    print(
+        "Expected reconstruction runs: "
+        f"{result['expected_reconstruction_runs']}"
+    )
     print(f"Final status: {result['status']}")
     print(f"Dataset directory: {DATASET_ROOT}")
-    print("-" * 42)
+    print("-" * 45)

@@ -1,51 +1,51 @@
 
 {
     "project": "NARIS",
+    "project_title": "Network-Assisted Detection and Reconstruction of Cyber Incidents under Anti-Forensic Conditions",
+    "version": "1.0",
     "dataset_role": "research_trial",
     "design_version": "1.0",
-    "total_scenarios": 3,
+    "research_scope": {
+        "objective": "Evaluate whether independent network evidence improves cyber-incident reconstruction when host evidence is degraded by anti-forensic activity.",
+        "research_question": "To what extent does network evidence improve incident reconstruction completeness and accuracy as host evidence undergoes increasing levels of anti-forensic degradation?",
+        "scope": "One controlled file-access and simulated-exfiltration scenario.",
+        "scenario_count": 1
+    },
+    "total_scenarios": 1,
+    "scenarios": [
+        {
+            "id": "S1",
+            "name": "Unauthorized File Access and Simulated Exfiltration",
+            "description": "Controlled creation, access, reading, local staging, and network transfer of a synthetic test file to a designated laboratory receiver.",
+            "execution_host": "NARIS-Windows",
+            "network_observer": "NARIS-Kali"
+        }
+    ],
     "degradation_levels": [
         {
             "id": "L0",
             "name": "Baseline",
-            "description": "No anti-forensic degradation"
+            "description": "No anti-forensic degradation."
         },
         {
             "id": "L1",
             "name": "Low",
-            "description": "Low evidence degradation"
+            "description": "Low-level degradation of selected non-critical host evidence."
         },
         {
             "id": "L2",
             "name": "Moderate",
-            "description": "Moderate evidence degradation"
+            "description": "Removal of selected non-critical evidence and controlled host timestamp modification."
         },
         {
             "id": "L3",
             "name": "High",
-            "description": "High evidence degradation"
+            "description": "Additional host log-record removal alongside L2 operations."
         },
         {
             "id": "L4",
             "name": "Severe",
-            "description": "Severe evidence degradation"
-        }
-    ],
-    "scenarios": [
-        {
-            "id": "S1",
-            "name": "Unauthorized File Access and Exfiltration",
-            "description": "Controlled file access and simulated data transfer activity"
-        },
-        {
-            "id": "S2",
-            "name": "Suspicious Process Execution and Persistence",
-            "description": "Controlled process execution and persistence-related activity"
-        },
-        {
-            "id": "S3",
-            "name": "Unauthorized Remote Access and Command Execution",
-            "description": "Controlled remote access and command execution activity"
+            "description": "Additional alteration of selected host log timestamps alongside L3 operations."
         }
     ],
     "trials_per_combination": 10,
@@ -54,17 +54,55 @@
         "network_only",
         "combined"
     ],
-    "expected_trials": 150,
-    "expected_reconstruction_runs": 450,
+    "expected_trials": 50,
+    "expected_reconstruction_runs": 150,
     "ground_truth_policy": {
         "separate_storage": true,
         "accessible_to_reconstruction": false,
         "evaluation_only": true
+    },
+    "evidence_policy": {
+        "host_evidence": "Collected from the Windows incident execution system.",
+        "network_evidence": "Captured independently by Kali Linux.",
+        "original_evidence_preserved": true,
+        "degradation_target": "Copies of host evidence only.",
+        "network_evidence_degraded": false,
+        "ground_truth_degraded": false
+    },
+    "evaluation": {
+        "reference": "Independently recorded ground truth.",
+        "metrics": [
+            "event_precision",
+            "event_recall",
+            "event_f1",
+            "reconstruction_completeness",
+            "timestamp_error",
+            "event_order_accuracy",
+            "evidence_coverage",
+            "missing_event_rate",
+            "conflict_and_uncertainty_rate"
+        ]
     },
     "execution": {
         "random_seed": 2027,
         "continue_on_trial_failure": true,
         "record_failed_trials": true,
         "overwrite_existing_trials": false
+    },
+    "version_separation": {
+        "v1.0": {
+            "scenario_ids": [
+                "S1"
+            ],
+            "expected_trials": 50,
+            "expected_reconstruction_runs": 150
+        },
+        "v2.0_reserved": {
+            "scenario_ids": [
+                "S2",
+                "S3"
+            ],
+            "description": "Expanded scenarios, automated evidence pipelines, larger experimental dataset, and additional validation."
+        }
     }
 }
