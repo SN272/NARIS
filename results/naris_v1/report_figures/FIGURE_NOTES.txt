@@ -1,0 +1,7 @@
+NARIS v1.0 report figures
+All plots are generated from results/naris_v1/per_trial_metrics.csv and availability.csv.
+Pooled precision/recall/F1 use summed TP, FP and FN, not a mean of trial percentages.
+Network-only performance reflects the implemented conservative HTTP POST detector.
+Do not interpret low network-only event counts as evidence that the PCAPs contain no other information;
+the current parser recognizes only the defined HTTP upload request pattern.
+Figures are descriptive results from this implementation, not proof of universal detector performance.

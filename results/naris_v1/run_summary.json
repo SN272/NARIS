@@ -1,0 +1,8 @@
+{
+  "dataset": "D:\\NARIS\\NARIS-Research\\experiment_data\\naris_v1\\final_dataset",
+  "generated_reconstruction_outputs": 120,
+  "evaluated_trial_mode_rows": 120,
+  "availability_rows": 150,
+  "ground_truth_used_for_reconstruction": false,
+  "note": "Only evidence-backed modes produce timeline files. Missing modes are listed in availability.csv."
+}
