@@ -709,5 +709,3 @@ progress. Planned capabilities should not be interpreted as features
 
 already delivered in v1.0.
 
-
-
