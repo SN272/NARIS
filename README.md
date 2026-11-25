@@ -54,9 +54,7 @@ degraded.
 
 -   [Installation and execution](#installation-and-execution)
 
--   [Experimental status and
-
-limitations](#experimental-status-and-limitations)
+-   [Experimental status and limitations] (#experimental-status-and-limitations)
 
 -   [Reproducibility](#reproducibility)
 
@@ -268,11 +266,13 @@ Community Cloud URL.
 
 Run the dashboard locally using:
 
+
 \`\`\` bash
 
 python -m streamlit run dashboard.py
 
 \`\`\`
+
 
 ## Repository contents
 
