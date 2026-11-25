@@ -1,0 +1,41 @@
+[
+  {
+    "mode": "host_only",
+    "trials": 40,
+    "TP": 140,
+    "FP": 40,
+    "FN": 60,
+    "precision": 0.7777777777777778,
+    "recall": 0.7,
+    "f1": 0.7368421052631577,
+    "completeness": 0.7,
+    "mean_trial_timestamp_error_seconds": 0.0,
+    "mean_trial_event_order_accuracy": 0.9466666666666667
+  },
+  {
+    "mode": "network_only",
+    "trials": 40,
+    "TP": 40,
+    "FP": 0,
+    "FN": 160,
+    "precision": 1.0,
+    "recall": 0.2,
+    "f1": 0.33333333333333337,
+    "completeness": 0.2,
+    "mean_trial_timestamp_error_seconds": 0.011609131097793579,
+    "mean_trial_event_order_accuracy": null
+  },
+  {
+    "mode": "combined",
+    "trials": 40,
+    "TP": 150,
+    "FP": 40,
+    "FN": 50,
+    "precision": 0.7894736842105263,
+    "recall": 0.75,
+    "f1": 0.7692307692307692,
+    "completeness": 0.75,
+    "mean_trial_timestamp_error_seconds": 0.003248065710067749,
+    "mean_trial_event_order_accuracy": 0.9466666666666667
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "dataset": "D:\\NARIS\\NARIS-Research\\experiment_data\\naris_v1\\final_dataset",
+  "trials_processed": 40,
+  "generated_adjusted_timeline_outputs": 120,
+  "evaluated_trial_mode_rows": 120,
+  "applied_offset_seconds": 663.389,
+  "offset_diagnostics_trials": 40,
+  "observed_raw_offset_mean_seconds": 663.3889675974846,
+  "observed_raw_offset_min_seconds": 663.305615901947,
+  "observed_raw_offset_max_seconds": 663.4073510169983,
+  "residual_mean_seconds": -3.2402515421381396e-05,
+  "ground_truth_used_for_reconstruction": false,
+  "interpretation": "Provisional offset-adjusted sensitivity analysis. Original PCAPs, original timelines, and raw results are preserved. The offset is not yet a validated clock correction.",
+  "adjusted_timeline_directory": "reconstruction_offset_adjusted"
+}

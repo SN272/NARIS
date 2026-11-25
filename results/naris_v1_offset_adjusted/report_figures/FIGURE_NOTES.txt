@@ -1,0 +1,1 @@
+NARIS provisional offset-adjusted figures. Generated from results/naris_v1_offset_adjusted/per_trial_metrics.csv. The network HTTP POST timestamp was shifted by the fixed empirical offset specified in run_summary.json. This is a sensitivity analysis, not a validated clock correction. Raw evidence/results are preserved separately.
