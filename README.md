@@ -1,16 +1,10 @@
-**# NARIS**
+# NARIS
 
+### Network-Assisted Anti-Forensics Detection & Incident Reconstruction System
 
+[![Version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/SN272/NARIS/releases)
 
-**### Network-Assisted Anti-Forensics Detection & Incident Reconstruction System**
-
-
-
-[![Version]\(https\://img.shields.io/badge/version-1.0.0-blue)]\(https\://github.com/SN272/NARIS/releases)
-
-[![Status]\(https\://img.shields.io/badge/status-research%20prototype-orange)]\(https\://github.com/SN272/NARIS)
-
-
+[![Status](https://img.shields.io/badge/status-research%20prototype-orange)](https://github.com/SN272/NARIS)
 
 NARIS is a research-oriented digital forensics prototype that
 
@@ -19,8 +13,6 @@ investigates how independent network evidence can support the
 reconstruction of cyber incidents when host-based forensic evidence has
 
 been degraded by anti-forensic activity.
-
-
 
 The project uses controlled experiments to compare incident
 
@@ -34,57 +26,43 @@ reconstruction when host artefacts are missing, altered, or otherwise
 
 degraded.
 
+> **Research status:** NARIS v1.0 is an experimental research prototype.
 
+> Results produced using timestamp-offset adjustment are provisional and
 
-\> **\*\*Research status:\*\*** NARIS v1.0 is an experimental research prototype.
+> must not be interpreted as independently validated final findings.
 
-\> Results produced using timestamp-offset adjustment are provisional and
+## Table of contents
 
-\> must not be interpreted as independently validated final findings.
+-   [Research motivation](#research-motivation)
 
+-   [Objectives](#objectives)
 
+-   [Research approach](#research-approach)
 
-**## Table of contents**
+-   [Experimental design](#experimental-design)
 
+-   [Reconstruction modes](#reconstruction-modes)
 
+-   [Evaluation](#evaluation)
 
-\-   [Research motivation]\(#research-motivation)
+-   [Dataset and current status](#dataset-and-current-status)
 
-\-   [Objectives]\(#objectives)
+-   [Dashboard](#dashboard)
 
-\-   [Research approach]\(#research-approach)
+-   [Repository contents](#repository-contents)
 
-\-   [Experimental design]\(#experimental-design)
+-   [Installation and execution](#installation-and-execution)
 
-\-   [Reconstruction modes]\(#reconstruction-modes)
+-   [Experimental status and
 
-\-   [Evaluation]\(#evaluation)
+limitations](#experimental-status-and-limitations)
 
-\-   [Dataset and current status]\(#dataset-and-current-status)
+-   [Reproducibility](#reproducibility)
 
-\-   [Dashboard]\(#dashboard)
+-   [Roadmap](#roadmap)
 
-\-   [Repository contents]\(#repository-contents)
-
-\-   [Installation and execution]\(#installation-and-execution)
-
-\-   [Experimental status and
-
-    limitations]\(#experimental-status-and-limitations)
-
-\-   [Reproducibility]\(#reproducibility)
-
-\-   [Roadmap]\(#roadmap)
-
-\-   [Citation]\(#citation)
-
-\-   [License]\(#license)
-
-
-
-**## Research motivation**
-
-
+## Research motivation
 
 Digital forensic investigations often rely on host artefacts such as
 
@@ -96,8 +74,6 @@ Anti-forensic actions can remove, alter, or manipulate these artefacts,
 
 making host-only reconstruction incomplete or misleading.
 
-
-
 Network activity can provide an independent source of evidence. NARIS
 
 explores the use of network observations alongside surviving host
@@ -106,129 +82,93 @@ artefacts to assess whether incident events can be reconstructed more
 
 effectively under controlled host-evidence degradation.
 
-
-
 NARIS does not assume that network evidence can replace host forensics;
 
 it studies the additional investigative value and limitations of
 
 combining evidence sources.
 
+## Objectives
 
+-   Establish controlled cyber-incident ground truth for repeatable
 
-**## Objectives**
+experiments.
 
+-   Apply defined levels of host-evidence degradation.
 
+-   Collect host artefacts and independent network evidence.
 
-\-   Establish controlled cyber-incident ground truth for repeatable
+-   Reconstruct incidents using host-only, network-only, and combined
 
-    experiments.
+evidence.
 
-\-   Apply defined levels of host-evidence degradation.
+-   Compare reconstructed events against ground truth strictly during
 
-\-   Collect host artefacts and independent network evidence.
+evaluation.
 
-\-   Reconstruct incidents using host-only, network-only, and combined
+-   Quantitatively assess reconstruction quality and evidence coverage.
 
-    evidence.
+-   Visualize experimental results for analysis and reporting.
 
-\-   Compare reconstructed events against ground truth strictly during
+## Research approach
 
-    evaluation.
+1.  **Controlled execution:** Execute a defined incident scenario in an
 
-\-   Quantitatively assess reconstruction quality and evidence coverage.
+isolated virtual lab and record ground-truth events.
 
-\-   Visualize experimental results for analysis and reporting.
+2.  **Evidence acquisition:** Collect host artefacts and network traffic
 
+associated with the execution.
 
+3.  **Anti-forensic degradation:** Apply controlled degradation to host
 
-**## Research approach**
+evidence at the selected experimental level.
 
+4.  **Evidence processing:** Analyze surviving host artefacts and
 
+network observations independently.
 
-1\.  **\*\*Controlled execution:\*\*** Execute a defined incident scenario in an
+5.  **Incident reconstruction:** Generate timelines using the selected
 
-    isolated virtual lab and record ground-truth events.
+reconstruction mode.
 
-2\.  **\*\*Evidence acquisition:\*\*** Collect host artefacts and network traffic
+6.  **Evaluation:** Compare reconstructed events with ground truth and
 
-    associated with the execution.
+calculate evaluation metrics.
 
-3\.  **\*\*Anti-forensic degradation:\*\*** Apply controlled degradation to host
+7.  **Analysis and visualization:** Aggregate results and generate
 
-    evidence at the selected experimental level.
-
-4\.  **\*\*Evidence processing:\*\*** Analyze surviving host artefacts and
-
-    network observations independently.
-
-5\.  **\*\*Incident reconstruction:\*\*** Generate timelines using the selected
-
-    reconstruction mode.
-
-6\.  **\*\*Evaluation:\*\*** Compare reconstructed events with ground truth and
-
-    calculate evaluation metrics.
-
-7\.  **\*\*Analysis and visualization:\*\*** Aggregate results and generate
-
-    dashboard views and report figures.
-
-
+dashboard views and report figures.
 
 Ground truth is used as the evaluation reference. It is not supplied to
 
 the reconstruction process.
 
+## Experimental design
 
+### Scenario S1
 
-**## Experimental design**
+The current documented experimental dataset focuses on **S1:
 
-
-
-**### Scenario S1**
-
-
-
-The current documented experimental dataset focuses on \*\*S1:
-
-Unauthorized File Access and Simulated Exfiltration\*\*. The scenario
+Unauthorized File Access and Simulated Exfiltration**. The scenario
 
 models a controlled sequence of file creation/access, staging, and
 
 simulated transfer activity in an isolated lab.
 
-
-
 The scenario is intended for controlled forensic experimentation and
 
 does not perform real-world data exfiltration.
 
-
-
-**### Host-evidence degradation**
-
-
+### Host-evidence degradation
 
 The experiment uses five degradation levels:
 
-
-
-  Level   Description
-
-  ------- ---------------------------------------
-
-  L0      Baseline / no intentional degradation
-
-  L1      Degradation level 1
-
-  L2      Degradation level 2
-
-  L3      Degradation level 3
-
-  L4      Degradation level 4
-
-
+- **L0:** Baseline / no intentional degradation
+- **L1:** Degradation level 1
+- **L2:** Degradation level 2
+- **L3:** Degradation level 3
+- **L4:** Degradation level 4
 
 The precise operations applied at each level are defined by the
 
@@ -236,73 +176,45 @@ experiment configuration and degradation manifests. Consult those
 
 artefacts when reproducing a particular trial.
 
+## Reconstruction modes
 
+| Mode | Evidence used |
+|---|---|
+| Host-only | Surviving host forensic artefacts |
+| Network-only | Captured network evidence |
+| Combined | Host evidence with network evidence used for corroboration and reconstruction |
 
-**## Reconstruction modes**
-
-
-
-  -----------------------------------------------------------------------
-
-  Mode                                Evidence used
-
-  ----------------------------------- -----------------------------------
-
-  Host-only                           Surviving host forensic artefacts
-
-
-
-  Network-only                        Captured network evidence
-
-
-
-  Combined                            Host evidence with network evidence
-
-                                      used for corroboration and
-
-                                      reconstruction
-
-  -----------------------------------------------------------------------
-
-
-
-**## Evaluation**
-
-
+## Evaluation
 
 Reconstructed timelines are evaluated against the experiment's
 
 ground-truth event records. The project tracks:
 
+-   **Event precision:** Proportion of reconstructed events that
 
+correctly match ground-truth events.
 
-\-   **\*\*Event precision:\*\*** Proportion of reconstructed events that
+-   **Event recall:** Proportion of ground-truth events recovered by the
 
-    correctly match ground-truth events.
+reconstruction.
 
-\-   **\*\*Event recall:\*\*** Proportion of ground-truth events recovered by the
+-   **F1-score:** Harmonic mean of event precision and recall.
 
-    reconstruction.
+-   **Reconstruction completeness:** Coverage of ground-truth incident
 
-\-   **\*\*F1-score:\*\*** Harmonic mean of event precision and recall.
+events in the reconstructed timeline.
 
-\-   **\*\*Reconstruction completeness:\*\*** Coverage of ground-truth incident
+-   **Timestamp error:** Difference between reconstructed event
 
-    events in the reconstructed timeline.
+timestamps and corresponding ground-truth timestamps.
 
-\-   **\*\*Timestamp error:\*\*** Difference between reconstructed event
+-   **Event-order accuracy:** Correctness of the reconstructed
 
-    timestamps and corresponding ground-truth timestamps.
+chronological ordering.
 
-\-   **\*\*Event-order accuracy:\*\*** Correctness of the reconstructed
+-   **Evidence coverage:** Coverage of relevant events by the available
 
-    chronological ordering.
-
-\-   **\*\*Evidence coverage:\*\*** Coverage of relevant events by the available
-
-    evidence sources.
-
-
+evidence sources.
 
 The matching tolerance and metric implementation are defined in the
 
@@ -310,33 +222,25 @@ evaluation code. Results should be interpreted with the corresponding
 
 experiment configuration, evidence availability, and limitations.
 
-
-
-**## Dataset and current status**
-
-
+## Dataset and current status
 
 The current S1 experimental records include:
 
+-   49 valid trials in the ground-truth dataset, with five ground-truth
 
+events per trial (245 ground-truth events).
 
-\-   49 valid trials in the ground-truth dataset, with five ground-truth
+-   40 L1--L4 trials with host evidence and per-trial network captures
 
-    events per trial (245 ground-truth events).
+(10 trials per level).
 
-\-   40 L1--L4 trials with host evidence and per-trial network captures
+-   Nine L0 trials with ground truth but without comparable host/network
 
-    (10 trials per level).
+evidence for the current L1--L4 reconstruction analysis.
 
-\-   Nine L0 trials with ground truth but without comparable host/network
+-   120 generated reconstruction outputs for the 40 L1--L4 trials across
 
-    evidence for the current L1--L4 reconstruction analysis.
-
-\-   120 generated reconstruction outputs for the 40 L1--L4 trials across
-
-    three reconstruction modes.
-
-
+three reconstruction modes.
 
 An infrastructure-validation trial is excluded from the valid
 
@@ -346,35 +250,23 @@ that do not produce a comparable reconstruction output; availability-row
 
 counts should not be interpreted as evaluated trial-mode outputs.
 
-
-
 These counts describe the current experimental records and may change as
 
 the dataset is validated and expanded. Refer to the generated CSV and
 
 JSON result files for the exact data used in a particular analysis.
 
-
-
-**## Dashboard**
-
-
+## Dashboard
 
 The Streamlit dashboard presents experimental results and visual
 
 summaries.
 
-
-
-**\*\*Live dashboard:\*\*** Replace this line with the deployed Streamlit
+**Live dashboard:** Replace this line with the deployed Streamlit
 
 Community Cloud URL.
 
-
-
 Run the dashboard locally using:
-
-
 
 \`\`\` bash
 
@@ -382,65 +274,18 @@ python -m streamlit run dashboard.py
 
 \`\`\`
 
+## Repository contents
 
-
-**## Repository contents**
-
-
-
-  -------------------------------------------------------------------------
-
-  Path                                  Purpose
-
-  ------------------------------------- -----------------------------------
-
-  \`dashboard.py\`                        Streamlit research dashboard
-
-
-
-  \`run_naris_reconstruction.py\`         Reconstruction and evaluation entry
-
-                                        point
-
-
-
-  \`naris_pipeline/\`                     Reconstruction and evaluation
-
-                                        implementation
-
-
-
-  \`results/naris_v1/\`                   Baseline NARIS v1.0 results
-
-
-
-  \`export_naris_figures.py\`             Exports report figures from result
-
-                                        files
-
-
-
-  \`results/naris_v1/report_figures/\`    Baseline report figures, when
-
-                                        generated
-
-
-
-  \`naris_offset_adjustment.py\`          Separate provisional
-
-                                        timestamp-offset analysis utility
-
-
-
-  \`results/naris_v1_offset_adjusted/\`   Provisional offset-adjusted
-
-                                        outputs, separate from baseline
-
-                                        results
-
-  -------------------------------------------------------------------------
-
-
+| Path | Purpose |
+|---|---|
+| `dashboard.py` | Streamlit research dashboard |
+| `run_naris_reconstruction.py` | Reconstruction and evaluation entry point |
+| `naris_pipeline/` | Reconstruction and evaluation implementation |
+| `results/naris_v1/` | Baseline NARIS v1.0 results |
+| `export_naris_figures.py` | Exports report figures from result files |
+| `results/naris_v1/report_figures/` | Baseline report figures, when generated |
+| `naris_offset_adjustment.py` | Separate provisional timestamp-offset analysis utility |
+| `results/naris_v1_offset_adjusted/` | Provisional offset-adjusted outputs, separate from baseline results |
 
 Additional directories may contain scenario-specific scripts, experiment
 
@@ -448,27 +293,17 @@ plans, evidence-preparation utilities, and supporting documentation.
 
 Their contents depend on the checked-out repository revision.
 
+## Installation and execution
 
+### Requirements
 
-**## Installation and execution**
+-   Python 3.x
 
+-   pip
 
-
-**### Requirements**
-
-
-
-\-   Python 3.x
-
-\-   pip
-
-\-   Packages required by the reconstruction and dashboard scripts
-
-
+-   Packages required by the reconstruction and dashboard scripts
 
 Install dependencies from the repository's \`requirements.txt\`:
-
-
 
 \`\`\` bash
 
@@ -476,13 +311,9 @@ python -m pip install -r requirements.txt
 
 \`\`\`
 
-
-
 If \`requirements.txt\` is not present in the checked-out revision,
 
 install the packages used by the relevant scripts, including:
-
-
 
 \`\`\` bash
 
@@ -490,15 +321,9 @@ python -m pip install pandas scapy streamlit
 
 \`\`\`
 
-
-
-**### Run reconstruction**
-
-
+### Run reconstruction
 
 From the repository root:
-
-
 
 \`\`\` bash
 
@@ -506,19 +331,13 @@ python run_naris_reconstruction.py --dataset experiment_data/naris_v1/final_data
 
 \`\`\`
 
-
-
 The dataset path must exist in the local checkout. If your dataset is
 
 stored elsewhere, supply its actual path. Preserve original evidence
 
 when preparing derived analysis outputs.
 
-
-
-**### Run dashboard**
-
-
+### Run dashboard
 
 \`\`\` bash
 
@@ -526,15 +345,9 @@ python -m streamlit run dashboard.py
 
 \`\`\`
 
-
-
-**### Export report figures**
-
-
+### Export report figures
 
 After the corresponding result files have been generated:
-
-
 
 \`\`\` bash
 
@@ -542,17 +355,11 @@ python export_naris_figures.py
 
 \`\`\`
 
-
-
 Check the script's configured input and output paths before running it
 
 if your results are stored elsewhere.
 
-
-
-**## Experimental status and limitations**
-
-
+## Experimental status and limitations
 
 NARIS v1.0 is a research prototype. Outputs must be interpreted in the
 
@@ -560,11 +367,7 @@ context of the experiment design and the evidence available for each
 
 trial.
 
-
-
-**### Timestamp-offset investigation**
-
-
+### Timestamp-offset investigation
 
 During analysis of the current L1--L4 network captures, a consistent
 
@@ -574,13 +377,11 @@ corresponding ground-truth timestamps. The observed difference was
 
 approximately 663.4 seconds across the examined trials.
 
-
-
 A separate offset-adjusted result set was generated for exploratory
 
 analysis. These outputs are stored under
 
-\`results/naris_v1_offset_adjusted/\` and are **\*\*provisional\*\***. The
+\`results/naris_v1_offset_adjusted/\` and are ****provisional****. The
 
 underlying timestamp discrepancy has not yet been conclusively explained
 
@@ -588,19 +389,13 @@ or independently validated. Offset-adjusted metrics and figures must not
 
 be presented as final validated findings.
 
-
-
 The baseline results under \`results/naris_v1/\` and provisional adjusted
 
 results under \`results/naris_v1_offset_adjusted/\` are separate result
 
 sets and should not be mixed.
 
-
-
-**### Evidence availability**
-
-
+### Evidence availability
 
 The current L0 records do not provide comparable host and network
 
@@ -610,102 +405,82 @@ treated as having the same evidence coverage or reconstruction basis as
 
 L1--L4.
 
+### Interpretation
 
+-   A reconstructed event is not automatically proof of malicious
 
-**### Interpretation**
+intent.
 
+-   Network evidence may corroborate particular actions without
 
+independently recovering every host-side event.
 
-\-   A reconstructed event is not automatically proof of malicious
+-   Results depend on the scenario, collection configuration,
 
-    intent.
+degradation operation, parser behavior, and event-matching rules.
 
-\-   Network evidence may corroborate particular actions without
+-   The prototype is intended for controlled research and education, not
 
-    independently recovering every host-side event.
+as a production incident-response platform.
 
-\-   Results depend on the scenario, collection configuration,
-
-    degradation operation, parser behavior, and event-matching rules.
-
-\-   The prototype is intended for controlled research and education, not
-
-    as a production incident-response platform.
-
-
-
-**## Reproducibility**
-
-
+## Reproducibility
 
 For reproducible experiments:
 
+-   Preserve original evidence and its hashes.
 
+-   Keep original and degraded host evidence distinguishable.
 
-\-   Preserve original evidence and its hashes.
+-   Retain trial identifiers, run identifiers, scenario identifiers, and
 
-\-   Keep original and degraded host evidence distinguishable.
+degradation-level metadata.
 
-\-   Retain trial identifiers, run identifiers, scenario identifiers, and
+-   Record the exact software/configuration revision used for each
 
-    degradation-level metadata.
+experiment.
 
-\-   Record the exact software/configuration revision used for each
+-   Keep derived or corrected artefacts separate from original captures.
 
-    experiment.
+-   Use ground truth only for evaluation, not as reconstruction input.
 
-\-   Keep derived or corrected artefacts separate from original captures.
-
-\-   Use ground truth only for evaluation, not as reconstruction input.
-
-\-   Report missing evidence and excluded trials explicitly.
-
-
+-   Report missing evidence and excluded trials explicitly.
 
 Do not overwrite original PCAP files, host artefacts, or ground-truth
 
 records when preparing derived outputs.
 
+## Roadmap
 
+### NARIS v1.0
 
-**## Roadmap**
+-   Controlled experimental framework.
 
+-   Host and network evidence collection.
 
+-   Host-only, network-only, and combined reconstruction.
 
-**### NARIS v1.0**
+-   Quantitative evaluation and visualization.
 
+-   Research prototype and experimental dataset.
 
-
-\-   Controlled experimental framework.
-
-\-   Host and network evidence collection.
-
-\-   Host-only, network-only, and combined reconstruction.
-
-\-   Quantitative evaluation and visualization.
-
-\-   Research prototype and experimental dataset.
-
-
-
-**### NARIS v2.0**
-
-
+### NARIS v2.0
 
 Planned future work includes:
 
 - Improved modular architecture and maintainability.
+
 - Enhanced evidence processing and detection.
+
 - More robust event correlation and reconstruction.
+
 - Expanded experimental validation and scenario coverage.
+
 - Improved handling and reporting of timestamp inconsistencies.
+
 - Further dashboard and analysis capabilities.
-
-
 
 The roadmap is subject to experimental findings and implementation
 
 progress. Planned capabilities should not be interpreted as features
 
 already delivered in v1.0.
-
